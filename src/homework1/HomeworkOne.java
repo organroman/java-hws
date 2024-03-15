@@ -24,7 +24,7 @@ public class HomeworkOne {
     }
 
     // array to string
-    static String show(int[] arr) {
+    public static String show(int[] arr) {
         StringBuilder outcome = new StringBuilder("[");
         for (int idx = 0; idx < arr.length; idx++) {
             int x = arr[idx];
