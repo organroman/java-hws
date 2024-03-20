@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 public class HomeworkOne {
     // get one random number
-    public static int RandomNumber() {
-        return (int) (Math.random() * 100 + 1);
-    }
+    //    public static int RandomNumber() {
+    //        return (int) (Math.random() * 100 + 1);
+    //    }
 
     // check if the user typed a number
     public static boolean isANumber(String str) {
@@ -24,7 +24,7 @@ public class HomeworkOne {
     }
 
     // array to string
-    public static String show(int[] arr) {
+    public static String arrayToString(int[] arr) {
         StringBuilder outcome = new StringBuilder("[");
         for (int idx = 0; idx < arr.length; idx++) {
             int x = arr[idx];
@@ -62,8 +62,8 @@ public class HomeworkOne {
         String playerName = scanner.next();
 
         System.out.println("Lets the game begin!");
-        int computerNumber = RandomNumber();
-
+//        int computerNumber = RandomNumber(); option 2 with using method
+        int computerNumber = (int) (Math.random() * 100 + 1);
         System.out.println("I've got a number from 1 to 100. Try to guess it");
         int[] playerNumbers = new int[0];
         int playerNumber;
@@ -90,7 +90,7 @@ public class HomeworkOne {
             } else {
                 System.out.printf("Congratulation, %s, you win!", playerName);
                 System.out.println();
-                System.out.printf("Your numbers: %s", show(playerNumbers));
+                System.out.printf("Your numbers: %s", arrayToString(playerNumbers));
             }
         } while (playerNumber != computerNumber);
     }

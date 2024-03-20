@@ -107,7 +107,6 @@ public class HomeworkTwo {
         // define the size of initial board which user is created
         int xLength = initialBoard.length;
         int yLength = initialBoard[0].length;
-        System.out.printf("updateBoard cx: %d, cy: %d",xLength, yLength);
 
         do {
             userCoors = getUserNumbers(xLength, yLength); // pass board size in order to properly define maxUser numbers in game
