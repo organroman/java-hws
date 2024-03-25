@@ -50,6 +50,7 @@ public class Family {
     }
 
     public void addChild(Human child) {
+        child.setFamily(this);
         Human[] newChildren = new Human[this.children.length + 1];
         System.arraycopy(this.children, 0, newChildren, 0, this.children.length);
         newChildren[newChildren.length - 1] = child;
@@ -61,7 +62,26 @@ public class Family {
             return false;
         }
         Human[] newChildren = new Human[this.children.length - 1];
-        System.arraycopy(this.children, 0, newChildren, 0, this.children.length);
+        System.arraycopy(this.children, 0, newChildren, 0, idx);
+        System.arraycopy(this.children, idx + 1, newChildren, idx, this.children.length - idx - 1);
+        setChildren(newChildren);
+        return true;
+    }
+
+    public boolean deleteChild(Human child) {
+        int idx = -1;
+
+        for (int i = 0; i < this.children.length; i++) {
+            if (this.children[i].equals(child)) {
+                idx = i;
+            }
+        }
+        if (idx == -1) {
+            return false;
+        }
+
+        Human[] newChildren = new Human[this.children.length - 1];
+        System.arraycopy(this.children, 0, newChildren, 0, idx);
         System.arraycopy(this.children, idx + 1, newChildren, idx, this.children.length - idx - 1);
         setChildren(newChildren);
         return true;
@@ -96,7 +116,7 @@ public class Family {
                     .append(" ")
                     .append(children[i].getSurname());
 
-            if (i > 0) childrenStr.append(", ");
+            if (i < this.children.length - 1) childrenStr.append(", ");
 
 
         }

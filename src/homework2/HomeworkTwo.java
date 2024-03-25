@@ -68,18 +68,22 @@ public class HomeworkTwo {
 
     static int validateAndParseIntUserNum(int maxNum) {
         Scanner scanner = new Scanner(System.in);
-        int userNum;
+        int userNum = 0;
         String userEnter;
+
         do {
             userEnter = scanner.next();
-            userNum = Integer.parseInt(userEnter);
-            if (!HomeworkOne.isANumber(userEnter) | userNum < 1 | userNum > maxNum) {
-                System.out.print("It's not valid number, enter again: ");
+            if (!HomeworkOne.isANumber(userEnter)) {
+                System.out.print("It's not a valid number. Enter again: ");
+                continue;
             }
-        }
-        while (!HomeworkOne.isANumber(userEnter) | userNum < 1 | userNum > maxNum);
+            userNum = Integer.parseInt(userEnter);
+            if (userNum < 1 || userNum > maxNum) {
+                System.out.printf("Number out of range. Enter a number between 1 and %s: ", maxNum);
+            }
+        } while (!HomeworkOne.isANumber(userEnter) || userNum < 1 || userNum > maxNum);
 
-        return userNum;
+        return Integer.parseInt(userEnter);
     }
 
     static int[] getUserNumbers(int maxX, int maxY) {
@@ -96,9 +100,15 @@ public class HomeworkTwo {
         Scanner scanner = new Scanner(System.in);
         System.out.print(message);
         String sizeStr = scanner.next();
+        int sizeInt;
 
-        return Integer.parseInt(sizeStr);
+        while (!HomeworkOne.isANumber(sizeStr)) {
+            System.out.print("It's not valid number, enter again: ");
+            sizeStr = scanner.next();
+        }
+        sizeInt = Integer.parseInt(sizeStr);
 
+        return sizeInt;
     }
 
     static void updateBoard(int cx, int cy, char[][] initialBoard) {
