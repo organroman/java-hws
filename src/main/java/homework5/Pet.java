@@ -1,0 +1,145 @@
+package homework5;
+
+import java.util.Arrays;
+
+public class Pet {
+    private Animal species;
+    private String nickname;
+    private int age;
+    private int trickLevel;
+    private String[] habits;
+
+
+    public Pet(Animal species, String nickname) {
+        this.species = species;
+        this.nickname = nickname;
+    }
+
+    public Pet(Animal species, String nickname, int age, int trickLevel, String[] habits) {
+        this.species = species;
+        this.nickname = nickname;
+        this.age = age;
+        this.trickLevel = trickLevel;
+        this.habits = habits;
+    }
+
+    public Pet() {
+    }
+
+
+    public Animal getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(Animal species) {
+        this.species = species;
+    }
+
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getTrickLevel() {
+        return trickLevel;
+    }
+
+    public void setTrickLevel(int trickLevel) {
+        if (trickLevel >= 0 && trickLevel <= 100) {
+            this.trickLevel = trickLevel;
+        }
+    }
+
+    public String[] getHabits() {
+        return habits;
+    }
+
+    public void setHabits(String[] habits) {
+        this.habits = habits;
+    }
+
+
+    public void eat() {
+        System.out.println("Я ї'м!");
+    }
+
+    public void respond() {
+        System.out.printf("Привіт, хазяїн. Я - %s. Я скучив", this.nickname);
+    }
+
+    public void foul() {
+        System.out.println("Потрібно добре замести сліди...");
+    }
+
+    public static String arrayToString(String[] arr) {
+        StringBuilder outcome = new StringBuilder("[");
+        for (int idx = 0; idx < arr.length; idx++) {
+            String x = arr[idx];
+            if (idx > 0) outcome.append(", ");
+            outcome.append(x);
+        }
+        return outcome.append("]").toString();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder outcome = new StringBuilder();
+
+        outcome
+                .append(this.species.name())
+                .append("{")
+                .append("nickname=")
+                .append(this.nickname)
+                .append(", age=")
+                .append(this.age)
+                .append(", trickLevel=")
+                .append(this.trickLevel);
+
+        if (this.habits != null) {
+            outcome
+                    .append(arrayToString(this.habits));
+
+        }
+        outcome.append(", legs=")
+                .append(this.species.numberOfLegs)
+                .append(", canFly=")
+                .append(this.species.canFly)
+                .append(", hasFur=")
+                .append(this.species.hasFur)
+                .append("}");
+
+        return outcome.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pet pet = (Pet) o;
+        return Arrays.equals(habits, pet.habits);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(habits);
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        System.out.println(this);
+    }
+}

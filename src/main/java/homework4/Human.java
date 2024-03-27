@@ -1,7 +1,5 @@
 package homework4;
 
-import java.util.Arrays;
-
 import static homework4.Pet.arrayToString;
 
 public class Human {
