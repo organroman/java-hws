@@ -1,5 +1,7 @@
 package homework4;
 
+import homework5.Family;
+
 import java.util.Arrays;
 
 public class Pet {
@@ -7,6 +9,7 @@ public class Pet {
     private String nickname;
     private int age;
     private int trickLevel;
+    private Family family;
     private String[] habits;
 
 
@@ -55,6 +58,7 @@ public class Pet {
     public int getTrickLevel() {
         return trickLevel;
     }
+
 
     public void setTrickLevel(int trickLevel) {
         if (trickLevel >= 0 && trickLevel <= 100) {

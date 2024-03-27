@@ -23,8 +23,13 @@ public class FamilyAppHw5 {
 
         Family famOne = new Family(janeDoe, johnDoe);
         famOne.setPet(blackDoe);
-        famOne.addChild(mikeDoe);
+//        famOne.addChild(mikeDoe);
         System.out.println(famOne);
+
+        Human[] famOneChild = famOne.getChildren();
+        for (int i = 0; i < famOneChild.length; i++) {
+            System.out.println("fam one child: " + famOneChild[i]);
+        }
 
 
 

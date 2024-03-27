@@ -38,6 +38,7 @@ public class FamilyAppHw4 {
         Pet blackDoe = new Pet("Husky", "Black");
 
 
+
         Family famOne = new Family(janeDoe, johnDoe);
         famOne.setPet(blackDoe);
         famOne.addChild(mikeDoe);
@@ -47,6 +48,7 @@ public class FamilyAppHw4 {
         System.out.println(famOne);
         System.out.println(janeDoe);
         System.out.println(blackDoe);
+        mikeDoe.greetPet();
 
         Human[] famOneChild = famOne.getChildren();
         for (int i = 0; i < famOneChild.length; i++) {
