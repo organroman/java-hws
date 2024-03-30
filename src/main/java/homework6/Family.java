@@ -1,13 +1,15 @@
 package homework6;
 
 import java.util.Objects;
+import java.util.Random;
 
 
-public class Family {
+public class Family implements HumanCreator {
     Human father;
     Human mother;
     Human[] children;
     Pet pet;
+
 
     public Family(Human mother, Human father) {
         this.father = father;
@@ -143,5 +145,40 @@ public class Family {
 
 
         return outcome.toString();
+
+    }
+
+    @Override
+    public Human bornChild() {
+        String[] manNames = {"Mike", "Adam", "Jean", "Valentin", "Roman"};
+        String[] womanNames = {"Eva", "Kate", "Sharon", "Julia", "Ksenia"};
+        Random random = new Random();
+
+        int iq = 0;
+        String name;
+
+        boolean isMale = random.nextBoolean();
+
+        if (isMale) {
+            name = manNames[random.nextInt(manNames.length)];
+        } else name = womanNames[random.nextInt(womanNames.length)];
+
+        if (this.father.getIq() > 0 && this.mother.getIq() > 0) {
+            iq = (this.father.getIq() + this.mother.getIq()) / 2;
+        }
+        Human child;
+
+        if (isMale) {
+            child = new Man();
+        } else child = new Woman();
+
+        child.setName(name);
+        child.setSurname(this.father.getSurname());
+        child.setIq(iq);
+        child.setFamily(this);
+
+        addChild(child);
+
+        return child;
     }
 }
