@@ -1,4 +1,4 @@
-package homework6;
+package homework7;
 
 import java.util.Set;
 
@@ -8,10 +8,11 @@ public class Dog extends Pet implements CanFoul {
         this.species = Species.DOG;
     }
 
-    public Dog(String nickname, int age, int trickLevel, String[] habits) {
+    public Dog(String nickname, int age, int trickLevel, Set<String> habits) {
         super(nickname, age, trickLevel, habits);
         this.species = Species.DOG;
     }
+
     public Dog() {
         this.species = Species.DOG;
     }
