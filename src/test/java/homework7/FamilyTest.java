@@ -1,12 +1,13 @@
 package homework7;
 
-import homework5.Pet;
 import homework5.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,6 +29,7 @@ public class FamilyTest {
         johnDoe.setYear(1985);
         johnDoe.setIq(80);
         johnDoe.setSchedule(scheduleJohn);
+        Set<Pet> famOnePets = new HashSet<>();
 
         Woman janeDoe = new Woman("Jane", "Doe", 1987);
         Dog blackDoe = new Dog("Black");
@@ -37,7 +39,9 @@ public class FamilyTest {
         mikeDoe.setYear(2005);
 
         famOne = new Family(janeDoe, johnDoe);
-        famOne.setPet(blackDoe);
+//        Set<Pet> pets = new HashSet<>();
+        famOnePets.add(blackDoe);
+//        famOne.setPets(blackDoe);
         famOne.addChild(mikeDoe);
 
         evaDoe = new homework7.Human("Eva", "Doe", 2020);
