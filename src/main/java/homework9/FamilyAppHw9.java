@@ -3,7 +3,7 @@ package homework9;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyAppHw9 {
+public class FamilyAppHw11 {
     public static void main(String[] args) {
 
         FamilyService familyService = new FamilyService(new CollectionFamilyDao(new ArrayList<>()));
