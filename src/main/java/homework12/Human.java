@@ -1,11 +1,11 @@
-package homework9;
+package homework12;
 
+import java.io.Serializable;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Map;
 
-public class Human {
+public class Human implements Serializable {
     private String name;
     private String surname;
     private long birthday;
@@ -13,10 +13,12 @@ public class Human {
     private Family family;
     private Map<DayOfWeek, String> schedule;
 
+    private transient DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     public Human(String name, String surname, String birthday) {
         this.name = name;
         this.surname = surname;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDateTime localDate = LocalDate.parse(birthday, formatter).atStartOfDay();
         this.birthday = localDate.toEpochSecond(ZoneOffset.UTC) * 1000;
     }
@@ -33,7 +35,7 @@ public class Human {
     public Human(String name, String surname, String birthday, int iq) {
         this.name = name;
         this.surname = surname;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDateTime localDate = LocalDate.parse(birthday, formatter).atStartOfDay();
         this.birthday = localDate.toEpochSecond(ZoneOffset.UTC) * 1000;
         this.iq = iq;
@@ -63,9 +65,13 @@ public class Human {
     }
 
     public void setBirthday(String birthday) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDateTime localDate = LocalDate.parse(birthday, formatter).atStartOfDay();
         this.birthday = localDate.toEpochSecond(ZoneOffset.UTC) * 1000;
+    }
+    public void setBirthday(LocalDate birthday) {
+        Instant instant = birthday.atStartOfDay(ZoneOffset.UTC).toInstant();
+           this.birthday = instant.toEpochMilli();
     }
 
     public int getIq() {
@@ -121,7 +127,8 @@ public class Human {
         LocalDate curDate = LocalDate.now();
         LocalDate birthDay = LocalDate.ofEpochDay(this.birthday / (24 * 60 * 60 * 1000));
         Period period = Period.between(birthDay, curDate);
-        int years = period.getYears();;
+        int years = period.getYears();
+        ;
         int months = period.getMonths();
         int days = period.getDays();
 
@@ -130,20 +137,27 @@ public class Human {
 
     }
 
-    static String MapToStr(Map<DayOfWeek, String> xss) {
-        StringBuilder outcome = new StringBuilder("[");
+    static String mapToStr(Map<DayOfWeek, String> xss, String openBracket, String closeBracket, String delimeter) {
+        StringBuilder outcome = new StringBuilder(openBracket);
+        int size = xss.size();
+        int count = 0;
 
         for (Map.Entry<DayOfWeek, String> entry : xss.entrySet()) {
             outcome
-                    .append("  ")
+//                    .append("  ")
                     .append(entry.getKey())
-                    .append(": ")
-                    .append(entry.getValue())
-                    .append(",");
+                    .append(delimeter)
+                    .append(entry.getValue());
+//                    .append(",");
+
+            count++;
+            if (count < size) {
+                outcome.append(", ");
+            }
 
         }
 
-        return outcome.append("]").toString();
+        return outcome.append(closeBracket).toString();
     }
 
     @Override
@@ -163,7 +177,7 @@ public class Human {
 
         if (schedule != null) {
             outcome.append(", schedule=")
-                    .append(MapToStr(this.schedule));
+                    .append(mapToStr(this.schedule, "[", "]", ": "));
         }
 
 
@@ -173,5 +187,26 @@ public class Human {
         return outcome.toString();
     }
 
+    public String prettyFormat() {
+        StringBuilder outcome = new StringBuilder("{");
 
+        LocalDateTime localDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(this.birthday), ZoneOffset.UTC);
+        String formattedDate = localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        outcome.append("name='")
+                .append(this.name)
+                .append("', surname='")
+                .append(this.surname)
+                .append("', birthday='")
+                .append(formattedDate)
+                .append("', iq=")
+                .append(this.iq)
+                .append("', schedule=");
+        if (this.schedule == null) {
+            outcome.append("null");
+        } else outcome.append(mapToStr(this.schedule, "{", "}", "="));
+        outcome.append("},");
+
+        return outcome.toString();
+    }
 }

@@ -1,9 +1,11 @@
-package homework9;
+package homework12;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.*;
 
 
-public class Family implements HumanCreator {
+public class Family implements HumanCreator, Serializable {
     Human father;
     Human mother;
     ArrayList<Human> children;
@@ -159,9 +161,12 @@ public class Family implements HumanCreator {
             child = new Man();
         } else child = new Woman();
 
+        LocalDate curDate = LocalDate.now();
+
         child.setName(name);
         child.setSurname(this.father.getSurname());
         child.setIq(iq);
+        child.setBirthday(curDate);
         child.setFamily(this);
 
         addChild(child);
@@ -169,5 +174,47 @@ public class Family implements HumanCreator {
         return child;
     }
 
+    public String prettyFormat() {
+        StringBuilder outcome = new StringBuilder();
 
+        StringBuilder childrenStr = new StringBuilder();
+        int index = 0;
+        for (Human child : this.children) {
+            if (child instanceof Man) {
+                childrenStr.append("boy: ");
+            } else {
+                childrenStr.append("girl: ");
+            }
+            childrenStr.append(child.prettyFormat());
+            if (index < this.children.size() - 1) {
+                childrenStr.append("\n\t\t");
+            }
+            index++;
+        }
+
+        outcome.append("family:\n\t")
+                .append("mother: ")
+                .append(this.mother.prettyFormat())
+                .append("\n\t")
+                .append("father: ")
+                .append(this.father.prettyFormat())
+                .append("\n\t");
+        if (this.children.isEmpty()) {
+            outcome.append("children: null\n\t");
+        } else outcome.append("children:\n\t\t").append(childrenStr).append("\n\t");
+
+        outcome
+                .append("pets: [");
+        int petIdx = 0;
+        for (Pet pet : this.pets) {
+            outcome.append(pet.prettyFormat());
+            if (petIdx < this.pets.size() - 1) {
+                outcome.append((", "));
+            }
+        }
+        outcome.append("]");
+
+
+        return outcome.toString();
+    }
 }

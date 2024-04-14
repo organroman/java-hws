@@ -1,12 +1,12 @@
-package homework7;
+package homework12;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Set;
 
-public abstract class Pet {
+public abstract class Pet implements Serializable {
     protected Species species = Species.UNKNOWN;
     private String nickname;
     private int age;
@@ -134,6 +134,38 @@ public abstract class Pet {
         return Objects.hash(habits);
     }
 
+    public String prettyFormat() {
+        StringBuilder outcome = new StringBuilder("{");
 
+        outcome
+
+                .append("species=")
+                .append(this.species.name())
+                .append(", nickname='")
+                .append(this.nickname)
+                .append("', age=")
+                .append(this.age)
+                .append(", trickLevel=")
+                .append(this.trickLevel)
+                .append(", habits=");
+
+        if (this.habits == null) {
+            outcome.append("[]");
+        } else {
+            outcome
+                    .append(setToString(this.habits));
+
+        }
+        outcome.append(", legs=")
+                .append(this.species.numberOfLegs)
+                .append(", canFly=")
+                .append(this.species.canFly)
+                .append(", hasFur=")
+                .append(this.species.hasFur)
+                .append("}");
+
+        return outcome.toString();
+
+    }
 
 }
